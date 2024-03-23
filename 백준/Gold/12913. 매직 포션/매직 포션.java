@@ -26,7 +26,7 @@ public class Main {
     static int[][] map;
     static double[][] v;
 
-    static int[] visit;
+    static int[][] visit;
     static int INF= 1000011;
     public static void main(String[] args) throws Exception {
 
@@ -36,7 +36,7 @@ public class Main {
         K = Integer.parseInt(st.nextToken());
         map = new int[N][N];
         v = new double[K+1][N];
-        visit = new int[N+1];
+        visit = new int[K+1][N];
         for(int i=0; i<=K; i++){
             for(int j=0; j<N; j++){
                 v[i][j] = INF;
@@ -63,12 +63,14 @@ public class Main {
         PriorityQueue<Node> pq = new PriorityQueue<>();
         pq.offer(new Node(n,0,0));
         v[0][n] = 0;
-        visit[0] = 1;
+
         while(!pq.isEmpty()){
                 Node now = pq.poll();
-                visit[now.idx]= 1;
+                if(visit[now.k][now.idx]==1) continue;
+
+                visit[now.k][now.idx]= 1;
+
                 for(int i=0; i<N; i++){
-//                    if(visit[i]==1) continue;
                     if(now.idx==i) continue;
                     //아직 매직 포션을 사용할 수 있다면
                     if(now.k < K){
