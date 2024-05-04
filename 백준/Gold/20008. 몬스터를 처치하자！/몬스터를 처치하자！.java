@@ -10,24 +10,13 @@ public class Main {
     static int[] wait;
     static int result = Integer.MAX_VALUE;
 
-    static class Skill implements Comparable<Skill>{
+    static class Skill {
         int time;
         int damage;
-        int index;
 
-        public Skill(int time, int damage, int index) {
+        public Skill(int time, int damage) {
             this.time = time;
             this.damage = damage;
-            this.index =index;
-        }
-
-        public int compareTo(Skill s) {
-            return this.time- s.time == 0 ? s.damage - this.damage : this.time- s.time;
-        }
-
-        @Override
-        public String toString() {
-            return "Skill [time=" + time + ", damage=" + damage + "]";
         }
     }
 
@@ -42,7 +31,7 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int time = Integer.parseInt(st.nextToken());
             int damage = Integer.parseInt(st.nextToken());
-            skills[i] = new Skill(time, damage, i);
+            skills[i] = new Skill(time, damage);
         }
 
         dfs(0, hp, wait);
@@ -72,7 +61,7 @@ public class Main {
                 for(int j=0; j<N; j++){
                     tempWait[j]--;
                 }
-                tempWait[i] = skills[i].time-1;
+                tempWait[i] = skills[i].time-1; //스킬을 쓴 순간 대기시간이 초기화되고, 다음 dfs인 1초 뒤에는 대기시간-1이 될 것이기 때문에 미리 1을 빼준다.
                 //dfs
                 dfs(cnt+1, mhp- skills[i].damage,tempWait);
             }
