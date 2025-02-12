@@ -19,7 +19,7 @@ public class Main
 		    if(geneSet.contains(input)){
 		       int idx = compareGene(input.charAt(0), input.charAt(1));
 		       visited[idx] = 1;
-		        
+		       continue;
 		    }
 		    geneSet.add(input);
 		    
