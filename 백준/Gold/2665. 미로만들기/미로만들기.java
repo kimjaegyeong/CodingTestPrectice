@@ -13,7 +13,7 @@ class Node implements Comparable<Node> {
 	}
 
 	public int compareTo(Node n) {
-		return this.room - n.room == 0 ? n.y - this.y == 0 ? n.x -this.x : n.y- this.y : this.room - n.room;
+		return this.room - n.room ;
 	}
 }
 
@@ -34,12 +34,7 @@ public class Main
 			String input = br.readLine();
 			for(int j=0; j<N; j++) {
 				map[i][j] = ((int) input.charAt(j)) - 48 ;
-			}
-		}
-
-		for(int i=0; i<N; i++) {
-			for(int j=0; j<N; j++) {
-				visited[i][j] = 100001;
+                visited[i][j] = 100001;
 			}
 		}
 
