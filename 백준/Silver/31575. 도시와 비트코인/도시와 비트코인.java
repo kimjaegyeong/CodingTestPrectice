@@ -1,62 +1,73 @@
 import java.util.*;
 import java.io.*;
+public class Main
+{
+	static int N;
+	static int M;
+	static int visited[][];
+	static int map[][];
+	static int[] dy= {0,1};
+	static int[] dx= {1,0};
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		M = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
 
-public class Main {
-    static int N, M;
-    static int[][] map;
-    static boolean[][] visited;
-    static int[] dy = {0, 1}; // 오른쪽, 아래
-    static int[] dx = {1, 0};
+		map = new int[N][M];
+		visited= new int[N][M];
+		for(int i=0; i<N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for(int j=0; j<M; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+		ArrayDeque<int[]> q = new ArrayDeque<int[]>();
 
-        N = Integer.parseInt(st.nextToken()); // 가로
-        M = Integer.parseInt(st.nextToken()); // 세로
-
-        map = new int[M][N];
-        visited = new boolean[M][N];
-
-        for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
-            }
+		q.offer(new int[] {0,0});
+		visited[0][0] = 1;
+        
+        if(N==1 && M==1){
+            System.out.println("Yes");
+            return;
         }
 
-        System.out.println(bfs() ? "Yes" : "No");
-    }
+		while(!q.isEmpty()) {
+			int[] node = q.poll();
 
-    static boolean bfs() {
-        Queue<int[]> queue = new ArrayDeque<>();
-        if (map[0][0] == 1) {
-            queue.offer(new int[]{0, 0});
-            visited[0][0] = true;
-        }
+			for(int i=0; i<2; i++) {
+				int ny = node[0] + dy[i];
+				int nx = node[1] + dx[i];
 
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int y = current[0];
-            int x = current[1];
+				if(!check(ny,nx)) continue;
 
-            if (y == M - 1 && x == N - 1) {
-                return true;
-            }
+				if(goal(ny,nx)) {
 
-            for (int i = 0; i < 2; i++) {
-                int ny = y + dy[i];
-                int nx = x + dx[i];
+					System.out.println("Yes");
+					return ;
+				}
 
-                if (ny >= 0 && ny < M && nx >= 0 && nx < N) {
-                    if (!visited[ny][nx] && map[ny][nx] == 1) {
-                        visited[ny][nx] = true;
-                        queue.offer(new int[]{ny, nx});
-                    }
-                }
-            }
-        }
+				q.offer(new int[] {ny,nx});
+				visited[ny][nx] = 1;
 
-        return false;
-    }
+
+			}
+
+		}
+
+		System.out.println("No");
+		return;
+
+	}
+
+	public static boolean goal(int y, int x) {
+		if(y == N-1 && x == M-1) return true;
+		return false;
+	}
+
+	public static boolean check(int y,int x) {
+		if(y >= N || x >=M || y< 0 || x< 0 || visited[y][x] ==1 || map[y][x] == 0 ) return false;
+		return true;
+	}
 }
