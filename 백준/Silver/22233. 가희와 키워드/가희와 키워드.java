@@ -6,7 +6,7 @@ public class Main
     static int M;
     static int cnt =0;
     static HashSet<String> set = new HashSet<String>();
-    
+    static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -30,7 +30,9 @@ public class Main
                 }
             }
 		    
-		    System.out.println(set.size());
+		    sb.append(set.size()).append("\n");
 		}
+		
+		System.out.println(sb);
 	}
 }
